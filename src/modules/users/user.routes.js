@@ -1,0 +1,44 @@
+import express from "express";
+import {
+  signUp,
+  signIn,
+  verifyAccount,
+  deleteUser,
+  updateUser,
+  resetPassword,
+  pressResetPassword,
+} from "./user.controller.js";
+import { checkEmail } from "./middleWare/checkEmail.js";
+import { verifyToken } from "./middleWare/verifyToken.js";
+import { validation } from "./middleWare/validation.js";
+import {
+  updateUserValidationSchema,
+  userLogInSchema,
+  userValidationSchema,
+} from "./user.validation.js";
+
+const userRoutes = express.Router();
+
+userRoutes.post(
+  "/signup",
+  validation(userValidationSchema),
+  checkEmail,
+  signUp
+);
+userRoutes.post("/signin", signIn, validation(userLogInSchema));
+userRoutes.patch(
+  "/updateuser",
+  verifyToken,
+  validation(updateUserValidationSchema),
+  updateUser
+);
+userRoutes.get("/verify/:token", verifyAccount);
+userRoutes.delete("/deleteuser", verifyToken, deleteUser);
+userRoutes.patch(
+  "/resetpassword",
+  validation(updateUserValidationSchema),
+  resetPassword
+);
+userRoutes.get("/pressreset-password/:token", pressResetPassword);
+
+export default userRoutes;
