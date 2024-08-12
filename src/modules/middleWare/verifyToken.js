@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import AppError from "../../../utility/appError.js";
+import AppError from "../../utility/appError.js";
 
 export const verifyToken = (req, res, next) => {
   jwt.verify(req.headers.token, "allahAkber", async (err, decoded) => {
