@@ -2,9 +2,9 @@ import { Schema, model } from "mongoose";
 
 const userSchema = new Schema(
   {
-    name: String,
+    fullName: String,
     email: String,
-    age: Number,
+
     password: String,
     isConfirmed: {
       type: Boolean,

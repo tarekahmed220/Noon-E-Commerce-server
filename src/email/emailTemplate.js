@@ -1,5 +1,5 @@
 export const template = (userName, token) => {
-  let firstName = userName.split(" ")[0];
+  let firstName = userName;
   return `
  <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +24,7 @@ export const template = (userName, token) => {
             <td style="padding: 20px; text-align: center;">
                 <p style="margin: 0; font-size: 16px; color: #333333;">Hello ${firstName},</p>
                 <p style="margin: 20px 0 0 0; font-size: 16px; color: #333333;">Thank you for signing up at Noon. We're excited to have you on board. Start shopping now and enjoy amazing deals and offers!</p>
-                <a href="http://localhost:4000/verify/${token}" target="_blank" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #333333; text-decoration: none; border-radius: 5px;">Verify Your Account</a>
+                <a href="http://localhost:4200/verify/${token}" target="_blank" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #333333; text-decoration: none; border-radius: 5px;">Verify Your Account</a>
             </td>
         </tr>
         <tr>

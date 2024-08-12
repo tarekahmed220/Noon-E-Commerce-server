@@ -23,7 +23,7 @@ export const resetEmailTemplate = (token) => {
             <td style="padding: 20px; text-align: center;">
                 <p style="margin: 0; font-size: 16px; color: #333333;">Hello</p>
                 <p style="margin: 20px 0 0 0; font-size: 16px; color: #333333;">We received a request to reset your password. Click the button below to reset it:</p>
-                <a href="http://localhost:4000/pressreset-password/${token}" target="_blank" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #333333; text-decoration: none; border-radius: 5px;">Reset Password</a>
+                <a href="http://localhost:4200/pressreset-password/${token}" target="_blank" style="display: inline-block; margin: 20px 0; padding: 10px 20px; font-size: 16px; color: #ffffff; background-color: #333333; text-decoration: none; border-radius: 5px;">Reset Password</a>
                 <p style="margin: 20px 0 0 0; font-size: 14px; color: #666666;">If you did not request a password reset, please ignore this email.</p>
             </td>
         </tr>

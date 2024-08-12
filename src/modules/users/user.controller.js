@@ -9,9 +9,7 @@ import sendResetEmail from "../../email/ResetPassword/emailResetPassword.js";
 const signUp = catchErrors(async (req, res, next) => {
   const addUser = await userModel.insertMany(req.body);
   addUser[0].password = undefined;
-
-  sendEmail(req.body.email, req.body.name);
-
+  sendEmail(req.body.email, req.body.fullName);
   res.json({ message: "added successfully", addUser });
 });
 
@@ -41,13 +39,13 @@ const signIn = catchErrors(async (req, res, next) => {
   const findUser = await userModel.findOne({ email: req.body.email });
 
   if (!findUser)
-    return next(new AppError("there is no user with that email address", 400));
+    return next(new AppError("There Is No User With That Email Address", 400));
 
   if (!bcrypt.compareSync(req.body.password, findUser.password))
     return next(new AppError("sorry, your data is not correct", 409));
 
   if (!findUser.isConfirmed)
-    return next(new AppError("please confirm your email first", 409));
+    return next(new AppError("Please Confirm Your Email First", 409));
 
   let token = jwt.sign(
     {
@@ -56,7 +54,8 @@ const signIn = catchErrors(async (req, res, next) => {
     },
     "allahAkber"
   );
-
+  console.log("password", req.body.password);
+  console.log("password", req.body.email);
   res.json({ message: "Welcome", token });
 });
 
@@ -90,6 +89,7 @@ const pressResetPassword = catchErrors(async (req, res, next) => {
     if (err) {
       return new AppError("an error occured please try again", 400);
     } else {
+      req.body.password = bcrypt.hashSync(req.body.password, 8);
       await userModel.findOneAndUpdate(
         { email: decoded.email },
         { password: req.body.password }

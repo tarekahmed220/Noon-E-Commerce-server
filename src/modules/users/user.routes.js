@@ -40,6 +40,6 @@ userRoutes.patch(
   validation(updateUserValidationSchema),
   resetPassword
 );
-userRoutes.get("/pressreset-password/:token", pressResetPassword);
+userRoutes.post("/pressreset-password/:token", pressResetPassword);
 
 export default userRoutes;
