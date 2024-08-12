@@ -3,11 +3,16 @@ import { dbConnetion } from "./db/dbConnection.js";
 import userRoutes from "./src/modules/users/user.routes.js";
 import sendEmail from "./src/email/email.js";
 import AppError from "./src/utility/appError.js";
+import cors from "cors";
 const app = express();
 const port = 4000;
 app.use(express.json());
 // db connection
 dbConnetion;
+
+//connect with front
+app.use(cors());
+
 // userRoutes
 app.use(userRoutes);
 

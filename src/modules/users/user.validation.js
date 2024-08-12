@@ -1,14 +1,13 @@
 import Joi from "joi";
 
 const userValidationSchema = Joi.object({
-  name: Joi.string().min(3).max(15).required(),
+  fullName: Joi.string().min(3).max(15).required(),
   email: Joi.string().email().required(),
   password: Joi.string()
     .pattern(new RegExp("^[A-Z][a-z0-9]{7,20}$"))
 
     .required(),
-  repassword: Joi.ref("password"),
-  age: Joi.number().min(9).max(90).required(),
+  confirmPassword: Joi.ref("password"),
 });
 
 const userLogInSchema = Joi.object({
@@ -25,8 +24,7 @@ const updateUserValidationSchema = Joi.object({
     .pattern(new RegExp("^[A-Z][a-z0-9]{7,20}$"))
 
     .optional(),
-  repassword: Joi.ref("password"),
-  age: Joi.number().min(9).max(90).optional(),
+  confirmPassword: Joi.ref("password"),
 });
 
 export { userValidationSchema, userLogInSchema, updateUserValidationSchema };
