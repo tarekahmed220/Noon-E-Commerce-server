@@ -1,4 +1,4 @@
-import AppError from "../../../utility/appError.js";
+import AppError from "../../utility/appError.js";
 
 export default function catchErrors(fn) {
   return (req, res, next) => {

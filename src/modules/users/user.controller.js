@@ -2,7 +2,7 @@ import { userModel } from "../../../db/models/user.model.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import sendEmail from "../../email/email.js";
-import catchErrors from "./middleWare/handleErrors.js";
+import catchErrors from "../middleWare/handleErrors.js";
 import AppError from "../../utility/appError.js";
 import sendResetEmail from "../../email/ResetPassword/emailResetPassword.js";
 

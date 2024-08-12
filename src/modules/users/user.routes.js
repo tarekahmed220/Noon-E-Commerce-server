@@ -8,9 +8,10 @@ import {
   resetPassword,
   pressResetPassword,
 } from "./user.controller.js";
-import { checkEmail } from "./middleWare/checkEmail.js";
-import { verifyToken } from "./middleWare/verifyToken.js";
-import { validation } from "./middleWare/validation.js";
+import { verifyToken } from "../middleWare/verifyToken.js";
+import { validation } from "../middleWare/validation.js";
+import { checkEmail } from "../middleWare/checkEmail.js";
+
 import {
   updateUserValidationSchema,
   userLogInSchema,

@@ -1,6 +1,6 @@
-import { userModel } from "../../../../db/models/user.model.js";
+import { userModel } from "../../../db/models/user.model.js";
 import bcrypt from "bcrypt";
-import AppError from "../../../utility/appError.js";
+import AppError from "../../utility/appError.js";
 
 export const checkEmail = async (req, res, next) => {
   let foundedUser = await userModel.findOne({ email: req.body.email });
