@@ -4,6 +4,10 @@ import userRoutes from "./src/modules/users/user.routes.js";
 import sendEmail from "./src/email/email.js";
 import AppError from "./src/utility/appError.js";
 import cors from "cors";
+import productRoutes from "./src/modules/products/product.routes.js";
+import cartRoutes from "./src/modules/cart/cart.router.js";
+import categoryRouters from "./src/modules/category/category.router.js";
+
 const app = express();
 const port = 4000;
 app.use(express.json());
@@ -15,6 +19,9 @@ app.use(cors());
 
 // userRoutes
 app.use(userRoutes);
+app.use(productRoutes);
+app.use(cartRoutes);
+app.use(categoryRouters);
 
 app.use((err, req, res, next) => {
   res.status(err.statusCode).json({ message: err.message });
