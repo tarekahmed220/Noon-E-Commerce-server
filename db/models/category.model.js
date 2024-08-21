@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 
+
 const categorySchema = new Schema({
   name: { type: String, required: true, unique: true },
 });
@@ -7,3 +8,4 @@ const categorySchema = new Schema({
 const categoryModel = new model("Category", categorySchema);
 
 export default categoryModel;
+

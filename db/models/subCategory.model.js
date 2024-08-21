@@ -1,3 +1,4 @@
+
 import mongoose, { model, Schema } from "mongoose";
 
 const subCategorySchema = new Schema({
@@ -12,3 +13,4 @@ const subCategorySchema = new Schema({
 const SubCategoryModel = new model("SubCategory", subCategorySchema);
 
 export default SubCategoryModel;
+
