@@ -3,7 +3,15 @@ import subCategoryModel from "../../../db/models/subCategory.model.js";
 import catchErrors from "../middleWare/handleErrors.js";
 
 const getAllProducts = catchErrors(async function (req, res) {
-  const products = await productModel.find();
+  const condition = {};
+  const {subCategoryId,keyword} = req.query
+  if(subCategoryId){
+    condition.subCategoryId = subCategoryId;
+  }
+  if(keyword){
+    condition.name =  { $regex: '.*' + keyword + '.*' } 
+  }
+  const products = await productModel.find(condition).populate("subCategoryId");
   res.json({ products });
 });
 
@@ -20,6 +28,7 @@ const getProduct = catchErrors(async function (req, res) {
 });
 
 const getSomeProducts = catchErrors(async function (req, res) {
+
   console.log(req.body);
   const { subCategoryName } = req.body;
   const subCategory = await subCategoryModel
@@ -40,6 +49,7 @@ const getSomeProducts = catchErrors(async function (req, res) {
     products: subCategoryProducts,
   });
 });
+
 
 const deleteProduct = catchErrors(async function (req, res) {
   const deletedProduct = await productModel.findByIdAndDelete(req.params.id);

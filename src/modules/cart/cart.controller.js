@@ -3,6 +3,7 @@ import productModel from "../../../db/models/product.model.js";
 import catchErrors from "../middleWare/handleErrors.js";
 
 const addToCart = catchErrors(async function (req, res) {
+
   const { productId, quantity } = req.body;
   const userId = req.user.id;
 
@@ -14,7 +15,6 @@ const addToCart = catchErrors(async function (req, res) {
   if (!product) {
     return res.status(404).json({ message: "Product not found" });
   }
-
   const cartItem = await cartModel.findOne({ userId, productId });
   if (!cartItem) {
     const newCartItem = new cartModel({ userId, productId, quantity });
@@ -56,6 +56,7 @@ const updateCart = catchErrors(async function (req, res) {
   }
 });
 
+
 const getCartItems = catchErrors(async function (req, res) {
   const userId = req.user.id;
   const cartItems = await cartModel.find({ userId }).populate("productId");
@@ -63,3 +64,4 @@ const getCartItems = catchErrors(async function (req, res) {
 });
 
 export { addToCart, removeFromCart, updateCart, getCartCount, getCartItems };
+

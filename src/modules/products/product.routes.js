@@ -10,6 +10,7 @@ import {
 
 const productRoutes = express.Router();
 
+
 productRoutes.post("/getsomeproducts", getSomeProducts);
 productRoutes.get("/getproduct/:id", getProduct);
 productRoutes.get("/getallproduct", getAllProducts);
