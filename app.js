@@ -9,6 +9,7 @@ import productRoutes from "./src/modules/products/product.routes.js";
 import cartRoutes from "./src/modules/cart/cart.router.js";
 import categoryRouters from "./src/modules/category/category.router.js";
 import mongoose from "mongoose";
+import favoriteRoutes from "./src/modules/favorites/favorites.routes.js";
 
 const app = express();
 const port = 4000;
@@ -23,6 +24,7 @@ app.use(cors());
 app.use(userRoutes);
 app.use(productRoutes);
 app.use(cartRoutes);
+app.use(favoriteRoutes);
 app.use(categoryRouters);
 
 app.use((err, req, res, next) => {

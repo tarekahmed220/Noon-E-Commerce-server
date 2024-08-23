@@ -1,4 +1,3 @@
-
 import mongoose, { model, Schema } from "mongoose";
 
 const productSchema = new Schema({
@@ -18,4 +17,3 @@ const productSchema = new Schema({
 
 const productModel = new model("Product", productSchema);
 export default productModel;
-

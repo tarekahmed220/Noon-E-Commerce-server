@@ -20,22 +20,25 @@ const getProduct = catchErrors(async function (req, res) {
 });
 
 const getSomeProducts = catchErrors(async function (req, res) {
-  const subCategories = await subCategoryModel.find().select("_id name");
-  const products = [];
-  for await (const subCategory of subCategories) {
-    const subCategoryProducts = await productModel
-      .find({
-        subCategoryId: subCategory._id.toString(),
-      })
-      .limit(18);
+  console.log(req.body);
+  const { subCategoryName } = req.body;
+  const subCategory = await subCategoryModel
+    .findOne({ name: subCategoryName })
+    .select("_id");
 
-    products.push({
-      subCategoryName: subCategory.name,
-      products: subCategoryProducts,
-    });
+  if (!subCategory) {
+    return res.status(404).json({ message: "Subcategory not found" });
   }
 
-  res.json(products);
+  const subCategoryProducts = await productModel
+    .find({
+      subCategoryId: subCategory._id.toString(),
+    })
+    .limit(12);
+
+  res.json({
+    products: subCategoryProducts,
+  });
 });
 
 const deleteProduct = catchErrors(async function (req, res) {
