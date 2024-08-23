@@ -5,8 +5,6 @@ import catchErrors from "../middleWare/handleErrors.js";
 const getAllProducts = catchErrors(async function (req, res) {
   const condition = {};
   const {subCategoryId,keyword} = req.query
-
-
   if(subCategoryId){
     condition.subCategoryId = subCategoryId;
   }
@@ -30,22 +28,26 @@ const getProduct = catchErrors(async function (req, res) {
 });
 
 const getSomeProducts = catchErrors(async function (req, res) {
-  const subCategories = await subCategoryModel.find().select("_id name");
-  const products = [];
-  for await (const subCategory of subCategories) {
-    const subCategoryProducts = await productModel
-      .find({
-        subCategoryId: subCategory._id.toString(),
-      })
-      .limit(18);
 
-    products.push({
-      subCategoryName: subCategory.name,
-      products: subCategoryProducts,
-    });
+  console.log(req.body);
+  const { subCategoryName } = req.body;
+  const subCategory = await subCategoryModel
+    .findOne({ name: subCategoryName })
+    .select("_id");
+
+  if (!subCategory) {
+    return res.status(404).json({ message: "Subcategory not found" });
   }
 
-  res.json(products);
+  const subCategoryProducts = await productModel
+    .find({
+      subCategoryId: subCategory._id.toString(),
+    })
+    .limit(12);
+
+  res.json({
+    products: subCategoryProducts,
+  });
 });
 
 

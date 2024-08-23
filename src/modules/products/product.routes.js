@@ -10,9 +10,10 @@ import {
 
 const productRoutes = express.Router();
 
-productRoutes.get("/getsomeproducts", getSomeProducts);
+
+productRoutes.post("/getsomeproducts", getSomeProducts);
 productRoutes.get("/getproduct/:id", getProduct);
-productRoutes.get("/getallproducts", getAllProducts);
+productRoutes.get("/getallproduct", getAllProducts);
 productRoutes.put("/updateproduct/:id", updateProduct);
 productRoutes.delete("/deleteproduct/:id", deleteProduct);
 productRoutes.post("/addproduct", createProduct);
