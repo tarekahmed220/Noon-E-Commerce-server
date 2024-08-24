@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   addToCart,
   removeFromCart,
@@ -9,6 +10,7 @@ import {
 import { verifyToken } from "../middleWare/verifyToken.js";
 
 const cartRoutes = express.Router();
+
 
 cartRoutes.get("/getcartitems", verifyToken, getCartItems);
 cartRoutes.post("/addtocart", verifyToken, addToCart);

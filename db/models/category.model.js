@@ -7,3 +7,4 @@ const categorySchema = new Schema({
 const categoryModel = new model("Category", categorySchema);
 
 export default categoryModel;
+
