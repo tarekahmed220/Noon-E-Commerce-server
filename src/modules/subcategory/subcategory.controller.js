@@ -2,6 +2,7 @@ import subCategoryModel from "../../../db/models/subCategory.model.js";
 import catchErrors from "../middleWare/handleErrors.js";
 
 
+
 const addSubCategory = catchErrors(async (req,res)=>{
     const {name, categoryId} = req.body;
     const newSubCategory = await subCategoryModel.create({name, categoryId});
@@ -34,3 +35,4 @@ export{
     updateSubCategory,
  
 }
+

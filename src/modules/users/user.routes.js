@@ -7,6 +7,7 @@ import {
   updateUser,
   resetPassword,
   pressResetPassword,
+  getusername,
 } from "./user.controller.js";
 import { verifyToken } from "../middleWare/verifyToken.js";
 import { validation } from "../middleWare/validation.js";
@@ -34,6 +35,7 @@ userRoutes.patch(
   updateUser
 );
 userRoutes.get("/verify/:token", verifyAccount);
+userRoutes.get("/getusername", verifyToken, getusername);
 userRoutes.delete("/deleteuser", verifyToken, deleteUser);
 userRoutes.patch(
   "/resetpassword",
