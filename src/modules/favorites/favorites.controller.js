@@ -34,6 +34,8 @@ const toggleFavorite = catchErrors(async function (req, res) {
 
 const removeFromFavorite = catchErrors(async function (req, res) {
   let productId = req.params.productId;
+  console.log("productId", productId);
+  console.log("req.params", req.params);
   let userId = req.user.id;
   let product = await productModel.findById(productId);
   if (!product) return res.status(404).json({ message: "Product not found" });
@@ -41,4 +43,19 @@ const removeFromFavorite = catchErrors(async function (req, res) {
   res.json({ message: "Product removed successfully" });
 });
 
-export { getUserFavorites, toggleFavorite, removeFromFavorite };
+const getWishListCount = catchErrors(async function (req, res) {
+  const userId = req.user.id;
+  const wishlistItems = await cartModel.find({ userId });
+  const wishlistCount = wishlistItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+  res.json(wishlistCount);
+});
+
+export {
+  getUserFavorites,
+  toggleFavorite,
+  removeFromFavorite,
+  getWishListCount,
+};

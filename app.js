@@ -10,6 +10,7 @@ import cartRoutes from "./src/modules/cart/cart.router.js";
 import categoryRouters from "./src/modules/category/category.router.js";
 import mongoose from "mongoose";
 import favoriteRoutes from "./src/modules/favorites/favorites.routes.js";
+import paymentRoute from "./src/modules/payment/payment.route.js";
 
 const app = express();
 const port = 4000;
@@ -26,6 +27,7 @@ app.use(productRoutes);
 app.use(cartRoutes);
 app.use(favoriteRoutes);
 app.use(categoryRouters);
+app.use(paymentRoute);
 
 app.use((err, req, res, next) => {
   res.status(err.statusCode).json({ message: err.message });
