@@ -4,15 +4,30 @@ import catchErrors from "../middleWare/handleErrors.js";
 
 const getAllProducts = catchErrors(async function (req, res) {
   const condition = {};
-  const {subCategoryId,keyword} = req.query
-  if(subCategoryId){
+  const { subCategoryId, keyword, page = 1, limit = 15 } = req.query;
+
+  if (subCategoryId) {
     condition.subCategoryId = subCategoryId;
   }
-  if(keyword){
-    condition.name =  { $regex: '.*' + keyword + '.*' } 
+
+  if (keyword) {
+    condition.name = { $regex: ".*" + keyword + ".*", $options: "i" };
   }
-  const products = await productModel.find(condition).populate("subCategoryId");
-  res.json({ products });
+  const offset = (page - 1) * limit;
+  const products = await productModel
+    .find(condition)
+    .populate("subCategoryId")
+    .limit(limit)
+    .skip(offset);
+
+  const total = await productModel.countDocuments(condition);
+
+  res.json({
+    products,
+    total,
+    page,
+    pages: Math.ceil(total / limit),
+  });
 });
 
 const createProduct = catchErrors(async function (req, res) {
@@ -28,7 +43,6 @@ const getProduct = catchErrors(async function (req, res) {
 });
 
 const getSomeProducts = catchErrors(async function (req, res) {
-
   console.log(req.body);
   const { subCategoryName } = req.body;
   const subCategory = await subCategoryModel
@@ -49,7 +63,6 @@ const getSomeProducts = catchErrors(async function (req, res) {
     products: subCategoryProducts,
   });
 });
-
 
 const deleteProduct = catchErrors(async function (req, res) {
   const deletedProduct = await productModel.findByIdAndDelete(req.params.id);

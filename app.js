@@ -9,7 +9,6 @@ import productRoutes from "./src/modules/products/product.routes.js";
 import cartRoutes from "./src/modules/cart/cart.router.js";
 import categoryRouters from "./src/modules/category/category.router.js";
 import subCategoryRouters from "./src/modules/subcategory/subcategory.routes.js";
-import mongoose from "mongoose";
 import favoriteRoutes from "./src/modules/favorites/favorites.routes.js";
 import paymentRoute from "./src/modules/payment/payment.route.js";
 
@@ -29,9 +28,8 @@ app.use(cartRoutes);
 
 app.use(categoryRouters);
 
-app.use(subCategoryRouters)
+app.use(subCategoryRouters);
 app.use(favoriteRoutes);
-
 
 app.use((err, req, res, next) => {
   res.status(err.statusCode).json({ message: err.message });
