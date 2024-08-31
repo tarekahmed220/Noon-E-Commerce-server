@@ -16,7 +16,6 @@ const getAllCategories = catchErrors(async function (req,res){
 
 const getCategory = catchErrors (async function (req,res){
     const oneCategory = await categoryModel.findById(req.params.id);
-
     if(!oneCategory) return res.status(404).json({message: "Category not found"});
 
     res.json({message:"Success",oneCategory});
