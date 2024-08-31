@@ -16,7 +16,7 @@ const getAllCategories = catchErrors(async function (req,res){
 
 const getCategory = catchErrors (async function (req,res){
     const oneCategory = await categoryModel.findById(req.params.id);
-    if(!category) return res.status(404).json({message: "Category not found"});
+    if(!oneCategory) return res.status(404).json({message: "Category not found"});
     res.json({message:"Success",oneCategory});
 })
 
@@ -29,7 +29,7 @@ const deleteCategory = catchErrors (async function (req,res){
 const updateCategory = catchErrors (async function (req,res){
     const {name} = req.body;
     const updatedCategory = await categoryModel.findByIdAndUpdate(req.params.id, {name}, {new: true});
-    if(!category) return res.status(404).json({message: "Category not found"});
+    if(!updatedCategory) return res.status(404).json({message: "Category not found"});
     res.json({message:"Category updated successfully",updatedCategory});
 
 })
