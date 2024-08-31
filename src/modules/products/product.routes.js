@@ -7,6 +7,7 @@ import {
   getSomeProducts,
   updateProduct,
 } from "./product.controller.js";
+import { verifyTokenAndRole } from "../middleWare/verifyTokenAndRole.js";
 
 const productRoutes = express.Router();
 
@@ -14,8 +15,8 @@ const productRoutes = express.Router();
 productRoutes.post("/getsomeproducts", getSomeProducts);
 productRoutes.get("/getproduct/:id", getProduct);
 productRoutes.get("/getallproduct", getAllProducts);
-productRoutes.put("/updateproduct/:id", updateProduct);
-productRoutes.delete("/deleteproduct/:id", deleteProduct);
-productRoutes.post("/addproduct", createProduct);
+productRoutes.put("/updateproduct/:id", verifyTokenAndRole, updateProduct);
+productRoutes.delete("/deleteproduct/:id", verifyTokenAndRole, deleteProduct);
+productRoutes.post("/addproduct", verifyTokenAndRole, createProduct);
 
 export default productRoutes;
