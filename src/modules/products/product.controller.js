@@ -30,9 +30,49 @@ const getAllProducts = catchErrors(async function (req, res) {
   });
 });
 
+// const createProduct = catchErrors(async function (req, res) {
+//   const { category, subCategory, itemName, price, onSale } = req.body;
+//   const newProduct = await productModel.insertOne(req.body);
+//   res.status(201).json({ newProduct });
+// });
+
 const createProduct = catchErrors(async function (req, res) {
-  const { category, subCategory, itemName, price, onSale } = req.body;
-  const newProduct = await productModel.insertOne(req.body);
+  // update
+  const {
+    name,
+    code,
+    image,
+    price,
+    rate,
+    onSale,
+    priceBeforeSale,
+    subCategoryId,
+  } = req.body;
+
+  if (
+    !name ||
+    !code ||
+    !image ||
+    !price ||
+    !rate ||
+    subCategoryId === undefined
+  ) {
+    return res
+      .status(400)
+      .json({ message: "All required fields must be provided" });
+  }
+
+  const newProduct = await productModel.create({
+    name,
+    code,
+    image,
+    price,
+    rate,
+    onSale,
+    priceBeforeSale,
+    subCategoryId,
+  });
+
   res.status(201).json({ newProduct });
 });
 
