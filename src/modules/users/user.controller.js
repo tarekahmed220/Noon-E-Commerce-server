@@ -101,6 +101,17 @@ const pressResetPassword = catchErrors(async (req, res, next) => {
   });
 });
 
+const getusername = catchErrors(async (req, res, next) => {
+  const userId = req.user.id;
+  const userName = await userModel.findById(userId).select("fullName -_id");
+
+  if (!userName) {
+    return new AppError("guest", 400);
+  } else {
+    res.json(userName);
+  }
+});
+
 export {
   signUp,
   signIn,
@@ -109,4 +120,5 @@ export {
   updateUser,
   resetPassword,
   pressResetPassword,
+  getusername,
 };

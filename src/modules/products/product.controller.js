@@ -3,8 +3,31 @@ import subCategoryModel from "../../../db/models/subCategory.model.js";
 import catchErrors from "../middleWare/handleErrors.js";
 
 const getAllProducts = catchErrors(async function (req, res) {
-  const products = await productModel.find();
-  res.json({ products });
+  const condition = {};
+  const { subCategoryId, keyword, page = 1, limit = 15 } = req.query;
+
+  if (subCategoryId) {
+    condition.subCategoryId = subCategoryId;
+  }
+
+  if (keyword) {
+    condition.name = { $regex: ".*" + keyword + ".*", $options: "i" };
+  }
+  const offset = (page - 1) * limit;
+  const products = await productModel
+    .find(condition)
+    .populate("subCategoryId")
+    .limit(limit)
+    .skip(offset);
+
+  const total = await productModel.countDocuments(condition);
+
+  res.json({
+    products,
+    total,
+    page,
+    pages: Math.ceil(total / limit),
+  });
 });
 
 const createProduct = catchErrors(async function (req, res) {
@@ -20,22 +43,25 @@ const getProduct = catchErrors(async function (req, res) {
 });
 
 const getSomeProducts = catchErrors(async function (req, res) {
-  const subCategories = await subCategoryModel.find().select("_id name");
-  const products = [];
-  for await (const subCategory of subCategories) {
-    const subCategoryProducts = await productModel
-      .find({
-        subCategoryId: subCategory._id.toString(),
-      })
-      .limit(18);
+  console.log(req.body);
+  const { subCategoryName } = req.body;
+  const subCategory = await subCategoryModel
+    .findOne({ name: subCategoryName })
+    .select("_id");
 
-    products.push({
-      subCategoryName: subCategory.name,
-      products: subCategoryProducts,
-    });
+  if (!subCategory) {
+    return res.status(404).json({ message: "Subcategory not found" });
   }
 
-  res.json(products);
+  const subCategoryProducts = await productModel
+    .find({
+      subCategoryId: subCategory._id.toString(),
+    })
+    .limit(12);
+
+  res.json({
+    products: subCategoryProducts,
+  });
 });
 
 const deleteProduct = catchErrors(async function (req, res) {
