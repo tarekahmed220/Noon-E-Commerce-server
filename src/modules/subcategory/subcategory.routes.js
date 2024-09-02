@@ -6,13 +6,14 @@ import {
   getSubCategory,
   updateSubCategory,
 } from "./subcategory.controller.js";
+import { verifyTokenAndRole } from "../middleWare/verifyTokenAndRole.js";
 
 const subCategoryRouters = express.Router();
 
 subCategoryRouters.get("/getallsubcategories", getAllSubCategories);
-subCategoryRouters.post("/addSubCategory", addSubCategory);
-subCategoryRouters.put("/updateSubCategory/:id", updateSubCategory);
-subCategoryRouters.delete("/deleteSubCategory/:id", deleteSubCategory);
+subCategoryRouters.post("/addSubCategory", verifyTokenAndRole, addSubCategory);
+subCategoryRouters.put("/updateSubCategory/:id", verifyTokenAndRole, updateSubCategory);
+subCategoryRouters.delete("/deleteSubCategory/:id", verifyTokenAndRole, deleteSubCategory);
 subCategoryRouters.get("/getSubCategory/:id", getSubCategory);
 
 export default subCategoryRouters;
