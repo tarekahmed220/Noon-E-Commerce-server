@@ -59,7 +59,7 @@ const createProduct = catchErrors(async function (req, res) {
   ) {
     return res
       .status(400)
-      .json({ message: "All required fields must be provided" });
+      .json({ message: "Enter info products" });
   }
 
   const newProduct = await productModel.create({

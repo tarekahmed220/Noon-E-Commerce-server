@@ -11,6 +11,7 @@ import categoryRouters from "./src/modules/category/category.router.js";
 import subCategoryRouters from "./src/modules/subcategory/subcategory.routes.js";
 import favoriteRoutes from "./src/modules/favorites/favorites.routes.js";
 import paymentRoute from "./src/modules/payment/payment.route.js";
+import couponRoutes from "./src/modules/coupon/coupon.routes.js";
 
 const app = express();
 const port = 4000;
@@ -26,10 +27,14 @@ app.use(userRoutes);
 app.use(productRoutes);
 app.use(cartRoutes);
 
+app.use(couponRoutes);
+
+
 app.use(categoryRouters);
 
 app.use(subCategoryRouters);
 app.use(favoriteRoutes);
+
 
 app.use((err, req, res, next) => {
   res.status(err.statusCode).json({ message: err.message });
