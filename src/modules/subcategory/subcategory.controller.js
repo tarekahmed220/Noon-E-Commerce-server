@@ -31,9 +31,17 @@ const updateSubCategory = catchErrors(async (req, res) => {
   res.json({ message: "Subcategory updated successfully", updatedSubCategory });
 });
 
+const deleteSubCategory = catchErrors(async function (req, res) {
+  const SubCategory = await subCategoryModel.findByIdAndDelete(req.params.id);
+  if (!SubCategory)
+    return res.status(404).json({ message: "SubCategory not found" });
+  res.json({ message: "SubCategory deleted successfully" });
+});
+
 export {
   getAllSubCategories,
   getSubCategory,
   addSubCategory,
   updateSubCategory,
+  deleteSubCategory,
 };
